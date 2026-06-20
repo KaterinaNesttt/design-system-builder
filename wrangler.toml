@@ -1,0 +1,16 @@
+name = "design-system-builder"
+main = "worker/index.ts"
+compatibility_date = "2024-03-20"
+
+# This configuration connects the worker to Cloudflare Pages static assets.
+# Since you're hosting on Cloudflare Pages, your worker can be served alongside your static assets.
+
+# [build]
+# command = "npm run build"
+
+# [site]
+# bucket = "./dist"
+
+# [[kv_namespaces]]
+# binding = "MY_KV_NAMESPACE"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
