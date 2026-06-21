@@ -12,12 +12,13 @@ export async function exportDesignSystem(state: DesignState) {
 @theme {
   --color-primary: ${state.colors.primary};
   --color-secondary: ${state.colors.secondary};
-  --color-accent: ${state.colors.accent};
   --color-background: ${state.colors.background};
-  --color-surface: ${state.colors.surface};
   --color-text-main: ${state.colors.text};
   --color-text-muted: ${state.colors.textMuted};
   --color-border-main: ${state.colors.border};
+  --color-card-bg: ${state.colors.cardBg};
+  --color-card-text: ${state.colors.cardText};
+  --color-card-border: ${state.colors.cardBorder};
   
   --radius-sm: calc(${state.borders.radius}rem * 0.5);
   --radius-md: ${state.borders.radius}rem;
@@ -89,7 +90,7 @@ export function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElemen
   return (
     <div 
       className={cn(
-        'rounded-[var(--radius-lg)] border border-[var(--color-border-main)] bg-[var(--color-surface)] shadow-sm overflow-hidden',
+        'rounded-[var(--radius-lg)] border border-[var(--color-card-border)] bg-[var(--color-card-bg)] text-[var(--color-card-text)] shadow-sm overflow-hidden',
         className
       )}
       {...props}

@@ -16,7 +16,6 @@ export function Header() {
     const prompt = `Виступай в ролі експерта з UI/UX дизайну. Я створюю веб-додаток з такою палітрою кольорів:
 Primary: ${colors.primary}
 Secondary: ${colors.secondary}
-Accent: ${colors.accent}
 Background: ${colors.background}
 Text: ${colors.text}
 
@@ -32,7 +31,7 @@ Text: ${colors.text}
   return (
     <header className="h-16 border-b border-[var(--color-border-main)] glass-panel flex items-center justify-between px-6 sticky top-0 z-20">
       <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-[var(--radius-md)] bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-accent)] flex items-center justify-center text-white">
+        <div className="w-8 h-8 rounded-[var(--radius-md)] bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] flex items-center justify-center text-white">
           <Settings2 size={18} />
         </div>
         <h1 className="font-bold text-lg tracking-tight">Конструктор дизайн-системи</h1>
@@ -49,9 +48,9 @@ Text: ${colors.text}
         </button>
         <button 
           onClick={handleGeminiPrompts}
-          className="px-4 py-2 bg-[var(--color-surface)] border border-[var(--color-border-main)] hover:border-[var(--color-accent)] text-[var(--color-text-main)] transition-colors rounded-[var(--radius-md)] flex items-center gap-2 text-sm font-medium shadow-sm hover:shadow-md"
+          className="px-4 py-2 bg-[var(--color-background)] border border-[var(--color-border-main)] hover:border-[var(--color-primary)] text-[var(--color-text-main)] transition-colors rounded-[var(--radius-md)] flex items-center gap-2 text-sm font-medium shadow-sm hover:shadow-md"
         >
-          <Wand2 size={16} className="text-[var(--color-accent)]" />
+          <Wand2 size={16} className="text-[var(--color-primary)]" />
           <span className="hidden sm:inline">Промпти Gemini</span>
         </button>
         <button 

@@ -11,6 +11,21 @@
   --color-text-muted: var(--color-text-muted);
   --color-border-main: var(--color-border-main);
   
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  
   --radius-sm: calc(var(--radius) * 0.5);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) * 1.5);
@@ -56,9 +71,8 @@
     --xatosfera-app-brighten-opacity: 0;
     --xatosfera-app-dim-opacity: 0;
 
-    --font-sans: -apple-system, 'SF Pro Text', 'TT Norms Pro', system-ui, sans-serif;
-    --font-display:
-      -apple-system, 'SF Pro Display', 'TT Hoves', 'TT Norms Pro', system-ui, sans-serif;
+    --font-sans: var(--font-family, -apple-system, 'SF Pro Text', 'TT Norms Pro', system-ui, sans-serif);
+    --font-display: var(--font-family, -apple-system, 'SF Pro Display', 'TT Hoves', 'TT Norms Pro', system-ui, sans-serif);
 
     /* iOS 26 Dark System Colors */
     --background: 213 69% 3%;
@@ -82,7 +96,7 @@
     --border: 0 0% 24% / 0.16;
     --input: 45 26% 85% / 0.13;
     --ring: 40 54% 53%;
-    --radius: 1.125rem;
+    --radius: 0.85rem;
 
     /* Sidebar */
     --sidebar-background: 47 9% 19% / 0.82;
@@ -170,8 +184,25 @@
     --contact-viber-border: 274 40% 60% / 0.35;
     --contact-viber-text: 274 56% 76%;
   }
-
   
+  html {
+    font-size: var(--font-base-size, 16px);
+  }
+
+  *, ::before, ::after {
+    border-color: var(--color-border-main);
+  }
+}
+
+@layer utilities {
+  .border { border-width: var(--border-width-main, 1px); }
+  .border-t { border-top-width: var(--border-width-main, 1px); }
+  .border-r { border-right-width: var(--border-width-main, 1px); }
+  .border-b { border-bottom-width: var(--border-width-main, 1px); }
+  .border-l { border-left-width: var(--border-width-main, 1px); }
+  .border-x { border-left-width: var(--border-width-main, 1px); border-right-width: var(--border-width-main, 1px); }
+  .border-y { border-top-width: var(--border-width-main, 1px); border-bottom-width: var(--border-width-main, 1px); }
+  .border-0 { border-width: 0; }
 }
 
 @layer base {
@@ -669,7 +700,9 @@
 
   /* iOS Card glass — плавні переходи */
   .glass-card {
-    @apply glass p-4 sm:p-5;
+    @apply relative rounded-2xl overflow-hidden border p-4 sm:p-5;
+    background: hsl(var(--surface-1) / 0.84);
+    border-color: hsl(var(--glass-border));
   }
 
   .glass-card:hover {
@@ -875,27 +908,7 @@ html:not([data-theme='light']) [data-radix-select-content] {
   
 }
 
-@media (min-width: 1024px) and (max-width: 1512px) {
-  html .app-page-shell::before,
-  
-}
 
-html .app-page-shell.public-property-content-shell::before {
-  inset: 0 0.5rem 0 0.5rem;
-  border: 0;
-}
-
-
-
-@media (min-width: 640px) {
-  html .app-page-shell.public-property-content-shell::before,
-  
-}
-
-@media (min-width: 1024px) {
-  html .app-page-shell.public-property-content-shell::before,
-  
-}
 
 .angels-migration-page {
   background:
@@ -909,9 +922,6 @@ html .app-page-shell.public-property-content-shell::before {
   overflow: hidden;
   border-radius: 18px;
 }
-
-html .app-page-shell.angels-migration-page-shell::before,
-
 
 .angels-migration-page-shell > * {
   position: relative;
@@ -997,11 +1007,4 @@ html .app-page-shell.angels-migration-page-shell::before,
  }
 
 
-@layer utilities {
-  .glass-panel {
-    background-color: color-mix(in srgb, var(--color-surface) var(--glass-opacity), transparent);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-  }
-}
 

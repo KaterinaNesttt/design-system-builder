@@ -2,14 +2,32 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 export type Colors = {
+  // Глобальні
   primary: string;
   secondary: string;
-  accent: string;
   background: string;
-  surface: string;
   text: string;
   textMuted: string;
   border: string;
+
+  // Бічна панель
+  sidebarBg: string;
+  sidebarText: string;
+  sidebarActiveBg: string;
+  sidebarActiveText: string;
+
+  // Картки
+  cardBg: string;
+  cardText: string;
+  cardBorder: string;
+
+  // Бейджі
+  badgeSuccessBg: string;
+  badgeSuccessText: string;
+  badgeWarningBg: string;
+  badgeWarningText: string;
+  badgeInfoBg: string;
+  badgeInfoText: string;
 };
 
 export type Typography = {
@@ -26,7 +44,6 @@ export type Effects = {
   shadowOpacity: number;
   shadowSize: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none';
   glassOpacity: number;
-  glassBlur: number;
 };
 
 export type DesignState = {
@@ -48,28 +65,45 @@ export type DesignStore = DesignState & {
 
 const defaultState: DesignState = {
   colors: {
-    primary: '#469da0', // iOS 26 Primary
-    secondary: '#162128', // iOS 26 Secondary
-    accent: '#275859', // iOS 26 Accent
-    background: '#02050d', // iOS 26 Background
-    surface: '#121c21', // iOS 26 Card
-    text: '#e3ded2', // iOS 26 Foreground
-    textMuted: '#a8a59e', // iOS 26 Muted Foreground
-    border: '#3d3d3d', // iOS 26 Border
+    // Глобальні
+    primary: '#469da0',
+    secondary: '#162128',
+    background: '#02050d',
+    text: '#e3ded2',
+    textMuted: '#a8a59e',
+    border: '#3d3d3d',
+
+    // Бічна панель
+    sidebarBg: '#050a14',
+    sidebarText: '#a8a59e',
+    sidebarActiveBg: '#469da0',
+    sidebarActiveText: '#ffffff',
+
+    // Картки
+    cardBg: '#121c21',
+    cardText: '#e3ded2',
+    cardBorder: '#3d3d3d',
+
+    // Бейджі
+    badgeSuccessBg: '#1e4d3b',
+    badgeSuccessText: '#7ee2b8',
+    badgeWarningBg: '#664d00',
+    badgeWarningText: '#ffd666',
+    badgeInfoBg: '#422c5e',
+    badgeInfoText: '#d1b3ff',
   },
   typography: {
     fontFamily: '-apple-system, "SF Pro Text", "TT Norms Pro", system-ui, sans-serif',
     baseSize: 16,
   },
   borders: {
-    radius: 1.125, // rem
+    radius: 0.85, // rem
     width: 1, // px
   },
   effects: {
     shadowOpacity: 10,
     shadowSize: 'md',
     glassOpacity: 80,
-    glassBlur: 12,
   },
   backgroundImage: null,
 };
@@ -91,7 +125,7 @@ export const useDesignStore = create<DesignStore>()(
       reset: () => set(defaultState),
     }),
     {
-      name: 'design-system-storage-v2',
+      name: 'design-system-storage-v3',
     }
   )
 );

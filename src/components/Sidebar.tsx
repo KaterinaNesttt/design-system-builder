@@ -6,15 +6,46 @@ import bg3 from '../assets/Abstract_minimalist_architectural_background,_premium
 export function Sidebar() {
   const { colors, typography, borders, effects, backgroundImage, updateColor, updateTypography, updateBorder, updateEffect, updateBackgroundImage } = useDesignStore();
 
-  const colorEntries = [
-    { key: 'primary', label: 'Основний' },
-    { key: 'secondary', label: 'Вторинний' },
-    { key: 'accent', label: 'Акцентний' },
-    { key: 'background', label: 'Фон' },
-    { key: 'surface', label: 'Поверхня (Картки, Модальні вікна)' },
-    { key: 'text', label: 'Основний текст' },
-    { key: 'textMuted', label: 'Приглушений текст' },
-    { key: 'border', label: 'Межі та роздільники' },
+  const colorCategories = [
+    {
+      title: 'Глобальні кольори',
+      items: [
+        { key: 'primary', label: 'Основний' },
+        { key: 'secondary', label: 'Вторинний' },
+        { key: 'background', label: 'Фон додатку' },
+        { key: 'text', label: 'Основний текст' },
+        { key: 'textMuted', label: 'Приглушений текст' },
+        { key: 'border', label: 'Межі та роздільники' },
+      ]
+    },
+    {
+      title: 'Бічна панель',
+      items: [
+        { key: 'sidebarBg', label: 'Фон панелі' },
+        { key: 'sidebarText', label: 'Текст панелі' },
+        { key: 'sidebarActiveBg', label: 'Фон активного пункту' },
+        { key: 'sidebarActiveText', label: 'Текст активного пункту' },
+      ]
+    },
+    {
+      title: 'Картки',
+      items: [
+        { key: 'cardBg', label: 'Фон картки' },
+        { key: 'cardText', label: 'Текст картки' },
+        { key: 'cardBorder', label: 'Межа картки' },
+      ]
+    },
+    {
+      title: 'Бейджі (Статуси)',
+      items: [
+        { key: 'badgeSuccessBg', label: 'Успіх (Фон)' },
+        { key: 'badgeSuccessText', label: 'Успіх (Текст)' },
+        { key: 'badgeWarningBg', label: 'Попередження (Фон)' },
+        { key: 'badgeWarningText', label: 'Попередження (Текст)' },
+        { key: 'badgeInfoBg', label: 'Інфо (Фон)' },
+        { key: 'badgeInfoText', label: 'Інфо (Текст)' },
+      ]
+    }
   ] as const;
 
   const fontOptions = [
@@ -26,7 +57,7 @@ export function Sidebar() {
   ];
 
   return (
-    <aside className="w-80 h-full border-r border-[var(--color-border-main)] glass-panel flex flex-col z-30 shrink-0 shadow-lg shadow-black/5 overflow-y-auto">
+    <aside className="w-80 h-full border-r border-[var(--color-border-main)] app-page-shell flex flex-col z-30 shrink-0 shadow-lg shadow-black/5 overflow-y-auto">
       <div className="p-6">
         <h2 className="text-xl font-bold mb-6 text-[var(--color-text-main)]">Дизайн-токени</h2>
         
@@ -34,26 +65,31 @@ export function Sidebar() {
           {/* Colors Section */}
           <section>
             <h3 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)] mb-4">Кольори</h3>
-            <div className="space-y-3">
-              {colorEntries.map(({ key, label }) => (
-                <div key={key} className="flex items-center justify-between">
-                  <label htmlFor={`color-${key}`} className="text-sm font-medium text-[var(--color-text-main)] cursor-pointer">
-                    {label}
-                  </label>
-                  <div className="flex items-center gap-2">
-                    <div className="text-xs text-[var(--color-text-muted)] uppercase w-16 text-right">
-                      {colors[key]}
+            <div className="space-y-6">
+              {colorCategories.map((category) => (
+                <div key={category.title} className="space-y-3">
+                  <h4 className="text-[11px] font-semibold text-[var(--color-primary)] uppercase tracking-wider mb-2">{category.title}</h4>
+                  {category.items.map(({ key, label }) => (
+                    <div key={key} className="flex items-center justify-between">
+                      <label htmlFor={`color-${key}`} className="text-sm font-medium text-[var(--color-text-main)] cursor-pointer">
+                        {label}
+                      </label>
+                      <div className="flex items-center gap-2">
+                        <div className="text-xs text-[var(--color-text-muted)] uppercase w-16 text-right">
+                          {colors[key as keyof typeof colors]}
+                        </div>
+                        <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[var(--color-border-main)] shadow-sm">
+                          <input
+                            id={`color-${key}`}
+                            type="color"
+                            value={colors[key as keyof typeof colors] as string}
+                            onChange={(e) => updateColor(key as keyof typeof colors, e.target.value)}
+                            className="absolute -top-2 -left-2 w-12 h-12 cursor-pointer"
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[var(--color-border-main)] shadow-sm">
-                      <input
-                        id={`color-${key}`}
-                        type="color"
-                        value={colors[key]}
-                        onChange={(e) => updateColor(key, e.target.value)}
-                        className="absolute -top-2 -left-2 w-12 h-12 cursor-pointer"
-                      />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -182,23 +218,7 @@ export function Sidebar() {
                   className="w-full accent-[var(--color-primary)]"
                 />
               </div>
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-sm font-medium text-[var(--color-text-main)]">
-                    Розмиття фону (скло)
-                  </label>
-                  <span className="text-xs text-[var(--color-text-muted)]">{effects.glassBlur}px</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="40"
-                  step="1"
-                  value={effects.glassBlur}
-                  onChange={(e) => updateEffect('glassBlur', parseInt(e.target.value))}
-                  className="w-full accent-[var(--color-primary)]"
-                />
-              </div>
+
               <div>
                 <label className="block text-sm font-medium text-[var(--color-text-main)] mb-1">
                   Розмір тіні
