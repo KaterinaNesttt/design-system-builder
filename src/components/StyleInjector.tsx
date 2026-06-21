@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDesignStore } from '../store/useDesignStore';
 
 export function StyleInjector() {
-  const { colors, typography, borders } = useDesignStore();
+  const { colors, typography, borders, effects } = useDesignStore();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -17,7 +17,10 @@ export function StyleInjector() {
     
     root.style.setProperty('--radius', `${borders.radius}rem`);
     root.style.setProperty('--font-family', typography.fontFamily);
-  }, [colors, typography, borders]);
+    
+    root.style.setProperty('--glass-opacity', `${effects.glassOpacity}%`);
+    root.style.setProperty('--glass-blur', `${effects.glassBlur}px`);
+  }, [colors, typography, borders, effects]);
 
   return null;
 }

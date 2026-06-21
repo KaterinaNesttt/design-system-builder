@@ -1,9 +1,7 @@
-export interface Env {
-  // Add your bindings here, e.g., KV Namespaces, D1 Databases, etc.
-}
+export type Env = Record<string, never>;
 
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     
     // Example API route

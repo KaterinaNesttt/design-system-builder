@@ -109,24 +109,24 @@ export function CardContent({ className, ...props }: React.HTMLAttributes<HTMLDi
 
   // Generate instructions
   const readmeContent = `
-# Exported Design System
+# Експортована дизайн-система
 
-This archive contains your customized design system ready for any React + Vite + Tailwind CSS v4 project.
+Цей архів містить вашу налаштовану дизайн-систему, готову до використання в будь-якому проєкті React + Vite + Tailwind CSS v4.
 
-## Installation
+## Встановлення
 
-1. Copy the \`styles/index.css\` file into your project.
-2. Copy the React components from \`components/\` into your project's components directory.
-3. Make sure you have \`lucide-react\`, \`clsx\`, and \`tailwind-merge\` installed if you use the pre-built components.
+1. Скопіюйте файл \`styles/index.css\` у ваш проєкт.
+2. Скопіюйте компоненти React з папки \`components/\` у директорію компонентів вашого проєкту.
+3. Переконайтеся, що ви встановили \`lucide-react\`, \`clsx\` та \`tailwind-merge\`, якщо ви використовуєте готові компоненти.
 
 \`\`\`bash
 npm install lucide-react clsx tailwind-merge
 \`\`\`
 
-## Usage
+## Використання
 
-Your design system uses native CSS variables defined in \`index.css\` and mapped via Tailwind v4's \`@theme\` directive.
-This means you can simply use standard Tailwind utility classes like \`bg-primary\`, \`text-accent\`, \`rounded-md\`, etc., and they will automatically map to your design system!
+Ваша дизайн-система використовує нативні CSS змінні, визначені в \`index.css\` і зіставлені через директиву \`@theme\` в Tailwind v4.
+Це означає, що ви можете просто використовувати стандартні утилітарні класи Tailwind, такі як \`bg-primary\`, \`text-accent\`, \`rounded-md\` тощо, і вони автоматично будуть відповідати вашій дизайн-системі!
 `;
   zip.file('README.md', readmeContent.trim());
 

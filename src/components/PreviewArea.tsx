@@ -1,140 +1,218 @@
-import { Mail, Bell, Search, LayoutDashboard, Settings, User } from 'lucide-react';
+import { 
+  Settings, User,
+  Home, Users, Building2, Handshake, CheckSquare, 
+  Clock, Database, Calendar, ListTodo, DollarSign, Euro, 
+  Target, FilePlus2, Lightbulb, Trophy, AlertTriangle, Activity, Zap
+} from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 export function PreviewArea() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  const DESKTOP_WIDTH = 1440;
+  const DESKTOP_HEIGHT = 900;
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (containerRef.current) {
+        const { clientWidth, clientHeight } = containerRef.current;
+        const scaleX = clientWidth / DESKTOP_WIDTH;
+        const scaleY = clientHeight / DESKTOP_HEIGHT;
+        setScale(Math.min(scaleX, scaleY, 1));
+      }
+    };
+
+    updateScale();
+    const observer = new ResizeObserver(updateScale);
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  const menuItems = [
+    { icon: Home, label: 'Головна', active: true },
+    { icon: Users, label: 'Метчі' },
+    { icon: Building2, label: "Об'єкти" },
+    { icon: User, label: 'Контакти' },
+    { icon: Handshake, label: 'Угоди' },
+    { icon: CheckSquare, label: 'Мої задачі' },
+    { icon: Clock, label: 'Розклад' },
+    { icon: Database, label: 'База OLX' },
+    { icon: Calendar, label: 'Календар' },
+    { icon: ListTodo, label: 'Завдання' },
+  ];
+
   return (
-    <div className="max-w-5xl mx-auto space-y-12 pb-20">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold mb-2">Design Preview</h2>
-        <p className="text-[var(--color-text-muted)]">Interact with the components below to see your design system in action.</p>
-      </div>
-
-      {/* Buttons */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-[var(--color-border-main)] pb-2">Buttons</h3>
-        <div className="flex flex-wrap gap-4 items-center p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface)] shadow-sm border border-[var(--color-border-main)]">
-          <button className="px-5 py-2.5 bg-[var(--color-primary)] text-white font-medium rounded-[var(--radius-md)] hover:opacity-90 transition-opacity shadow-sm">
-            Primary Action
-          </button>
-          <button className="px-5 py-2.5 bg-[var(--color-secondary)] text-white font-medium rounded-[var(--radius-md)] hover:opacity-90 transition-opacity shadow-sm">
-            Secondary Action
-          </button>
-          <button className="px-5 py-2.5 bg-[var(--color-background)] border border-[var(--color-border-main)] text-[var(--color-text-main)] font-medium rounded-[var(--radius-md)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] transition-colors shadow-sm">
-            Outline Button
-          </button>
-          <button className="px-5 py-2.5 text-[var(--color-text-muted)] font-medium rounded-[var(--radius-md)] hover:bg-[var(--color-primary)]/10 hover:text-[var(--color-primary)] transition-colors">
-            Ghost Button
-          </button>
-        </div>
-      </section>
-
-      {/* Forms & Inputs */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-[var(--color-border-main)] pb-2">Form Elements</h3>
-        <div className="grid md:grid-cols-2 gap-6 p-6 rounded-[var(--radius-lg)] bg-[var(--color-surface)] shadow-sm border border-[var(--color-border-main)]">
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" size={18} />
-              <input 
-                type="email" 
-                placeholder="you@example.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-[var(--color-background)] border border-[var(--color-border-main)] rounded-[var(--radius-md)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent transition-shadow"
-              />
+    <div 
+      ref={containerRef} 
+      className="w-full h-full flex items-center justify-center overflow-hidden rounded-[24px] bg-black/5"
+    >
+      <div 
+        style={{
+          width: DESKTOP_WIDTH,
+          height: DESKTOP_HEIGHT,
+          transform: `scale(${scale})`,
+          transformOrigin: 'center center',
+          transition: 'transform 0.1s ease-out'
+        }}
+        className="relative shrink-0 overflow-hidden shadow-2xl rounded-[24px] app-fixed-bg app-page-shell"
+      >
+        {/* Sidebar */}
+        <aside className="asset-sidebar xatosfera-sidebar absolute top-0 left-0 h-full flex flex-col z-20 py-6 border-r border-border/10">
+          {/* Logo */}
+          <div className="flex items-center gap-3 mb-8 px-6">
+            <div className="w-10 h-10 rounded-md border border-primary/30 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-primary rounded-sm rotate-45 flex items-center justify-center">
+                <div className="w-2 h-2 bg-secondary rounded-full -rotate-45" />
+              </div>
             </div>
-            <p className="text-xs text-[var(--color-text-muted)]">We'll never share your email.</p>
-          </div>
-          <div className="space-y-2">
-            <label className="block text-sm font-medium">Password</label>
-            <input 
-              type="password" 
-              placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-[var(--color-background)] border border-[var(--color-border-main)] rounded-[var(--radius-md)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)] focus:border-transparent transition-shadow"
-            />
-          </div>
-          <div className="md:col-span-2 flex items-center gap-2">
-            <input type="checkbox" className="w-4 h-4 rounded-[var(--radius-sm)] text-[var(--color-primary)] border-[var(--color-border-main)] focus:ring-[var(--color-primary)]" />
-            <span className="text-sm">I agree to the terms and conditions</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Mock Application Layout */}
-      <section className="space-y-4">
-        <h3 className="text-xl font-semibold border-b border-[var(--color-border-main)] pb-2">Dashboard Example</h3>
-        <div className="rounded-[var(--radius-xl)] border border-[var(--color-border-main)] bg-[var(--color-surface)] shadow-md overflow-hidden flex flex-col md:flex-row min-h-[400px]">
-          {/* Mock Sidebar */}
-          <div className="w-full md:w-64 bg-[var(--color-background)] border-b md:border-b-0 md:border-r border-[var(--color-border-main)] p-4 flex flex-col">
-            <div className="flex items-center gap-2 font-bold text-lg mb-8 text-[var(--color-primary)]">
-              <div className="w-8 h-8 bg-gradient-to-tr from-[var(--color-primary)] to-[var(--color-accent)] rounded-[var(--radius-md)]"></div>
-              AppLogo
+            <div>
+              <div className="font-bold text-lg leading-tight text-primary">Хатосфера</div>
+              <div className="text-[10px] text-muted-foreground uppercase tracking-wider">Агенція Нерухомості</div>
             </div>
-            <nav className="space-y-1">
-              {[{icon: LayoutDashboard, label: 'Dashboard', active: true}, {icon: User, label: 'Customers'}, {icon: Settings, label: 'Settings'}].map((item, i) => (
-                <a key={i} href="#" className={`flex items-center gap-3 px-3 py-2 rounded-[var(--radius-md)] transition-colors ${item.active ? 'bg-[var(--color-primary)] text-white shadow-sm shadow-[var(--color-primary)]/20' : 'text-[var(--color-text-muted)] hover:bg-[var(--color-surface)] hover:text-[var(--color-text-main)]'}`}>
-                  <item.icon size={18} />
-                  <span className="font-medium text-sm">{item.label}</span>
-                </a>
-              ))}
-            </nav>
           </div>
           
-          {/* Mock Content */}
-          <div className="flex-1 flex flex-col">
-            <header className="h-16 border-b border-[var(--color-border-main)] flex items-center justify-between px-6 bg-[var(--color-surface)]">
-              <div className="relative w-64">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--color-text-muted)]" size={16} />
-                <input type="text" placeholder="Search..." className="w-full pl-9 pr-4 py-1.5 bg-[var(--color-background)] border border-[var(--color-border-main)] rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/50 transition-shadow" />
+          {/* Menu */}
+          <nav className="space-y-1 px-4 flex-1 overflow-y-auto">
+            {menuItems.map((item, i) => (
+              <a key={i} href="#" className={`flex items-center gap-3 px-4 py-3 rounded-full transition-colors ${item.active ? 'bg-primary/10 text-primary font-medium' : 'text-muted-foreground hover:text-foreground hover:bg-surface/20 font-medium'}`}>
+                <item.icon size={20} className={item.active ? 'text-primary' : ''} />
+                <span className="text-sm">{item.label}</span>
+              </a>
+            ))}
+          </nav>
+          
+          {/* User Profile */}
+          <div className="mt-6 pt-4 flex items-center justify-between px-6 border-t border-border/10">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-surface/30 border border-border/20 flex items-center justify-center font-bold text-sm text-muted-foreground">Г</div>
+              <div>
+                <div className="text-sm font-medium text-foreground">Геннадій Кернес</div>
+                <div className="text-[10px] text-muted-foreground">Суперадмін</div>
               </div>
-              <div className="flex items-center gap-4">
-                <button className="relative text-[var(--color-text-muted)] hover:text-[var(--color-text-main)] transition-colors">
-                  <Bell size={20} />
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[var(--color-secondary)] rounded-full border-2 border-[var(--color-surface)]"></span>
-                </button>
-                <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center font-bold text-sm border border-[var(--color-primary)]/20">
-                  JD
-                </div>
+            </div>
+            <Settings size={16} className="text-muted-foreground hover:text-primary cursor-pointer transition-colors" />
+          </div>
+        </aside>
+        
+        {/* Main Content */}
+        <div className="xatosfera-main-content absolute inset-0 z-10 flex flex-col">
+          <main className="flex-1 overflow-y-auto app-content px-6 md:px-10 py-6 flex flex-col gap-6 relative z-10">
+            {/* Header */}
+            <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 shrink-0 pt-2">
+              <h1 className="text-2xl font-medium flex items-center gap-3 text-foreground">
+                <Home size={28} className="text-primary" />
+                Панель керування
+              </h1>
+              <div className="flex items-center gap-6 text-sm font-medium text-muted-foreground glass-card !p-3 !rounded-full">
+                <span className="flex items-center gap-2"><DollarSign size={16} className="text-secondary" /> USD: 44.91</span>
+                <span className="flex items-center gap-2"><Euro size={16} className="text-secondary" /> EUR: 51.46</span>
+                <span className="opacity-50 text-xs">НБУ</span>
               </div>
             </header>
             
-            <div className="p-6 flex-1 bg-[var(--color-background)]/50">
-              <h1 className="text-2xl font-bold mb-6">Overview</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                {[
-                  { label: 'Total Revenue', value: '$45,231.89', change: '+20.1%', color: 'var(--color-primary)' },
-                  { label: 'Active Users', value: '2,350', change: '+15.2%', color: 'var(--color-secondary)' },
-                  { label: 'Conversion Rate', value: '3.4%', change: '-2.4%', color: 'var(--color-accent)' },
-                ].map((stat, i) => (
-                  <div key={i} className="bg-[var(--color-surface)] p-5 rounded-[var(--radius-lg)] border border-[var(--color-border-main)] shadow-sm">
-                    <h4 className="text-sm font-medium text-[var(--color-text-muted)] mb-2">{stat.label}</h4>
-                    <div className="text-2xl font-bold mb-1">{stat.value}</div>
-                    <div className="text-xs font-medium" style={{ color: stat.change.startsWith('+') ? 'var(--color-secondary)' : 'var(--color-accent)' }}>
-                      {stat.change} from last month
+            {/* Top Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 shrink-0">
+              {[
+                { icon: Building2, label: "Всі об'єкти", value: '57' },
+                { icon: CheckSquare, label: 'Всі закриті угоди', value: '0' },
+                { icon: Target, label: 'Конверсія лідів', value: '0%' },
+              ].map((stat, i) => (
+                <div key={i} className="glass-card flex items-center justify-between shadow-card">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary border border-primary/20">
+                      <stat.icon size={20} />
                     </div>
+                    <span className="text-sm font-medium text-muted-foreground">{stat.label}</span>
                   </div>
-                ))}
+                  <span className="text-3xl font-light text-foreground">{stat.value}</span>
+                </div>
+              ))}
+            </div>
+            
+            {/* Main Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 shrink-0 pb-6">
+              {/* Left Column */}
+              <div className="lg:col-span-7 flex flex-col gap-6">
+                <div className="glass-card flex-1 shadow-card flex flex-col">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="font-semibold flex items-center gap-2 text-foreground">
+                      <Activity size={18} className="text-orange-500" />
+                      Остання активність
+                    </h3>
+                    <span className="text-xs text-muted-foreground hover:text-primary cursor-pointer transition-colors">Натисни щоб побачити всі</span>
+                  </div>
+                  <div className="space-y-4 flex-1">
+                    {[1, 2, 3, 4, 5].map(i => (
+                      <div key={i} className="flex items-center gap-4 pb-4 border-b border-border/10 last:border-0 last:pb-0">
+                        <div className="w-10 h-10 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center" />
+                        <div className="flex-1">
+                          <p className="text-sm font-medium text-foreground">оновив клієнта <span className="font-bold text-primary">О</span></p>
+                          <p className="text-xs text-muted-foreground mt-0.5">3 д тому</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="glass-card shadow-card">
+                  <h3 className="font-semibold flex items-center gap-2 mb-4 text-muted-foreground">
+                    <AlertTriangle size={18} className="text-yellow-500" />
+                    Статус бази даних
+                  </h3>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Активні об'єкти без фото</span>
+                    <span className="w-6 h-6 rounded-full border border-border/20 flex items-center justify-center text-xs text-foreground bg-surface/30">3</span>
+                  </div>
+                </div>
               </div>
-
-              <div className="bg-[var(--color-surface)] rounded-[var(--radius-lg)] border border-[var(--color-border-main)] p-6 shadow-sm">
-                <h3 className="font-semibold mb-4">Recent Activity</h3>
-                <div className="space-y-4">
-                  {[1, 2, 3].map(i => (
-                    <div key={i} className="flex items-center gap-4 pb-4 border-b border-[var(--color-border-main)] last:border-0 last:pb-0">
-                      <div className="w-10 h-10 rounded-[var(--radius-full)] bg-[var(--color-background)] flex items-center justify-center text-[var(--color-primary)]">
-                        <User size={16} />
-                      </div>
-                      <div className="flex-1">
-                        <p className="text-sm font-medium">New user registered</p>
-                        <p className="text-xs text-[var(--color-text-muted)]">Just now</p>
-                      </div>
-                      <button className="text-xs font-medium text-[var(--color-primary)] hover:underline">View</button>
-                    </div>
-                  ))}
+              
+              {/* Right Column */}
+              <div className="lg:col-span-5 flex flex-col gap-6">
+                <div className="glass-card shadow-card">
+                  <h3 className="font-semibold flex items-center gap-2 mb-6 text-foreground">
+                    <Zap size={18} className="text-secondary" />
+                    Швидкі дії
+                  </h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { icon: Building2, label: "Створити об'єкт" },
+                      { icon: Clock, label: "Запланувати зустріч" },
+                      { icon: Users, label: "Новий клієнт" },
+                      { icon: FilePlus2, label: "Нова угода" },
+                    ].map((action, i) => (
+                      <button key={i} className="flex flex-col items-center justify-center gap-3 p-4 rounded-xl border border-primary/20 bg-primary/5 hover:bg-primary/10 transition-all text-primary group hover:shadow-button">
+                        <action.icon size={22} className="opacity-80 group-hover:opacity-100 transition-opacity" />
+                        <span className="text-xs font-medium">{action.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="glass-card shadow-card flex-1 flex flex-col justify-center min-h-[140px]">
+                  <h3 className="font-semibold flex items-center gap-2 mb-3 text-muted-foreground">
+                    <Lightbulb size={18} className="text-yellow-500" />
+                    Порада дня
+                  </h3>
+                  <p className="text-sm text-muted-foreground animate-pulse flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-yellow-500" />
+                    Завантаження поради...
+                  </p>
+                </div>
+                
+                <div className="glass-card shadow-card">
+                  <h3 className="font-semibold flex items-center gap-2 text-foreground">
+                    <Trophy size={18} className="text-yellow-500" />
+                    Топ агентів
+                  </h3>
                 </div>
               </div>
             </div>
-          </div>
+          </main>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

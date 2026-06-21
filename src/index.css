@@ -1,3 +1,4 @@
+
 @import "tailwindcss";
 
 @theme {
@@ -20,35 +21,987 @@
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+@font-face {
+  font-family: 'TT Norms Pro';
+  src: url('./assets/fonts/TTNormsPro-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'TT Hoves';
+  src: url('./assets/fonts/TTHoves-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
 @layer base {
+  /* ═══════════════════════════════════════════════════════════════════
+     iOS 26 & iPadOS 26 Dark Theme
+     Максимальне використання системних кольорів, blur, glassmorphism
+     та плавних анімацій у стилі iOS 18+
+   ═══════════════════════════════════════════════════════════════════ */
+
   :root {
-    /* Fallbacks, will be overwritten by JS style injector */
-    --color-primary: #3b82f6;
-    --color-secondary: #10b981;
-    --color-accent: #8b5cf6;
-    --color-background: #f8fafc;
-    --color-surface: #ffffff;
-    --color-text-main: #0f172a;
-    --color-text-muted: #64748b;
-    --color-border-main: #e2e8f0;
-    
-    --radius: 0.5rem;
-    --font-family: "Inter", system-ui, sans-serif;
+    /* iOS Safe Area insets */
+    --sat: env(safe-area-inset-top);
+    --xatosfera-sidebar-text-size: 24px;
+    --xatosfera-sidebar-icon-size: 31px;
+    --xatosfera-sidebar-width: 256px;
+    --xatosfera-app-brightness: 100%;
+    --xatosfera-app-brighten-opacity: 0;
+    --xatosfera-app-dim-opacity: 0;
+
+    --font-sans: -apple-system, 'SF Pro Text', 'TT Norms Pro', system-ui, sans-serif;
+    --font-display:
+      -apple-system, 'SF Pro Display', 'TT Hoves', 'TT Norms Pro', system-ui, sans-serif;
+
+    /* iOS 26 Dark System Colors */
+    --background: 213 69% 3%;
+    --foreground: 42 20% 87%;
+    --card: 192 31% 10% / 0.84;
+    --card-foreground: 42 20% 87%;
+    --popover: 201 59% 6% / 0.96;
+    --popover-foreground: 42 20% 87%;
+    --primary: 182 39% 45%;
+    --primary-foreground: 182 32% 86%;
+    --secondary: 198 29% 12% / 0.86;
+    --secondary-foreground: 45 17% 86%;
+    --muted: 197 25% 11% / 0.82;
+    --muted-foreground: 43 7% 62%;
+    --accent: 182 39% 25%;
+    --accent-foreground: 167 32% 86%;
+    --destructive: 2 76% 62%;
+    --destructive-foreground: 0 0% 99%;
+    --success: 144 41% 52%;
+    --warning: 37 66% 59%;
+    --border: 0 0% 24% / 0.16;
+    --input: 45 26% 85% / 0.13;
+    --ring: 40 54% 53%;
+    --radius: 1.125rem;
+
+    /* Sidebar */
+    --sidebar-background: 47 9% 19% / 0.82;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 182 39% 45% / 0.96;
+    --sidebar-primary-foreground: 0 0% 96%;
+    --sidebar-accent: 182 39% 25% / 0.46;
+    --sidebar-accent-foreground: 0 0% 73%;
+    --sidebar-border: 0 0% 26% / 0.18;
+    --sidebar-ring: 167 39% 19%;
+
+    --sidebar-link: 182 39% 45%;
+    --sidebar-link-muted: 182 39% 15%;
+    --sidebar-link-hover: 182 39% 35%;
+
+    /* ─────────────────────────────────────────
+       iOS 26 Glassmorphism & Material Blur
+       Ultra-thin frosted glass з живими відблисками
+    ───────────────────────────────────────── */
+
+    /* iOS Glass Material - Ultra Thin */
+    --glass-bg: rgba(0, 0, 0, 0.32);
+    --glass-bg-hover: rgba(65, 65, 65, 0.32);
+    --glass-bg-active: rgba(71, 71, 71, 0.32);
+
+    --glass-highlight: 220 40% 3% / 0.08;
+    --glass-glow: 45 100% 70% / 0.12;
+
+    /* iOS Glass borders - тонкі світлі лінії */
+    --border-glass: 0 0% 82% / 0.18;
+    --border-glass-strong: 0 0% 82% / 0.08;
+    --glass-border-hover: rgba(174, 174, 174, 0.18);
+
+    /* Gold Glass - для активних станів */
+    --glass-border-blue: rgba(190, 190, 190, 0.4);
+    --glass-border-blue-strong: rgba(136, 136, 136, 0.65);
+
+    --gold-50: 182 39% 16%;
+    --gold-100: 182 39% 21%;
+    --gold-200: 182 39% 26%;
+    --gold-500: 182 39% 35%;
+
+    --shadow-card-dark: 0 1px 1px rgba(54, 69, 75, 0.09), inset 0 1px 0 rgba(70, 157, 160, 0.95);
+    --shadow-muted-dark: 0 1px 1px rgba(54, 69, 75, 0.09), inset 0 1px 0 rgba(210, 210, 207, 0.95);
+    --shadow-button-dark:
+      0 1px 1px rgba(54, 69, 75, 0.09), inset 0 2px 1px rgba(70, 157, 160, 0.95);
+
+    /* iOS System Colors for Status */
+    --system-red: 0 100% 65%;
+    --system-green: 170 76% 26%;
+    --system-yellow: 48 100% 50%;
+    --system-orange: 28 100% 55%;
+    --system-purple: 270 70% 60%;
+    --system-pink: 330 85% 65%;
+
+    --badge-neutral-bg: 36 14% 54% / 0.2;
+    --badge-neutral-border: 38 26% 72% / 0.34;
+    --badge-neutral-text: 245 46% 69%;
+    --badge-info-bg: 287 44% 42% / 0.18;
+    --badge-info-border: 287 48% 58% / 0.34;
+    --badge-info-text: 287 55% 74%;
+    --badge-warning-bg: 40 78% 50% / 0.18;
+    --badge-warning-border: 40 78% 58% / 0.36;
+    --badge-warning-text: 42 88% 78%;
+    --badge-success-bg: 154 44% 42% / 0.18;
+    --badge-success-border: 154 48% 58% / 0.34;
+    --badge-success-text: 154 58% 72%;
+    --badge-danger-bg: 356 58% 56% / 0.18;
+    --badge-danger-border: 356 62% 64% / 0.34;
+    --badge-danger-text: 356 76% 76%;
+
+    --contact-phone-bg: 154 46% 40% / 0.14;
+    --contact-phone-border: 154 46% 56% / 0.32;
+    --contact-phone-text: 154 58% 72%;
+    --contact-email-bg: 40 78% 50% / 0.14;
+    --contact-email-border: 40 78% 58% / 0.34;
+    --contact-email-text: 42 88% 78%;
+    --contact-whatsapp-bg: 148 54% 42% / 0.16;
+    --contact-whatsapp-border: 148 54% 55% / 0.35;
+    --contact-whatsapp-text: 148 62% 72%;
+    --contact-telegram-bg: 199 52% 45% / 0.16;
+    --contact-telegram-border: 199 52% 58% / 0.35;
+    --contact-telegram-text: 199 66% 74%;
+    --contact-viber-bg: 274 40% 48% / 0.16;
+    --contact-viber-border: 274 40% 60% / 0.35;
+    --contact-viber-text: 274 56% 76%;
   }
+
   
+}
+
+@layer base {
+  .xatosfera-brightness-scope {
+    position: relative;
+  }
+
+  .xatosfera-brightness-scope::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        rgba(255, 255, 255, var(--xatosfera-app-brighten-opacity)),
+        rgba(255, 255, 255, var(--xatosfera-app-brighten-opacity))
+      ),
+      linear-gradient(
+        rgba(0, 0, 0, var(--xatosfera-app-dim-opacity)),
+        rgba(0, 0, 0, var(--xatosfera-app-dim-opacity))
+      );
+    transition: background 180ms cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 90;
+  }
+
+  @media (min-width: 1024px) {
+    .xatosfera-sidebar {
+      width: var(--xatosfera-sidebar-width);
+    }
+
+    .xatosfera-main-content {
+      padding-left: var(--xatosfera-sidebar-width);
+    }
+  }
+
   body {
-    background-color: var(--color-background);
-    color: var(--color-text-main);
-    font-family: var(--font-family);
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    font-synthesis-style: none;
+    /* iOS-style smooth scrolling */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .xatosfera-bg-layer {
+    background-image: var(--xatosfera-dark-bg);
+  }
+
+  /* Головний контент — як великий світлий glass shell */
+  html .app-page-shell {
+    position: relative;
+  }
+  html .app-page-shell::before {
+    content: '';
+    position: absolute;
+    inset: 0px 1rem;
+    pointer-events: none;
+    border-radius: 1.5rem;
+
+    background-color: rgba(10, 10, 14, 0.5);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.11);
+    border-right: 1px solid rgba(255, 255, 255, 0.045);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+
+    -webkit-backdrop-filter: blur(6px) saturate(1.22) contrast(1.035);
+    backdrop-filter: blur(6px) saturate(1.22) contrast(1.035);
+
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: -1;
+  }
+
+  @media (min-width: 1024px) {
+    html .app-page-shell::before {
+      inset: 0px 4vw 0px calc(var(--xatosfera-sidebar-width) + 4vw);
+    }
+  }
+
+  @media (min-width: 1440px) {
+    html .app-page-shell::before {
+      inset: 0px 130px 0px calc(var(--xatosfera-sidebar-width) + 125px);
+    }
+  }
+
+  
+
+  @media (max-width: 767px) {
+    .xatosfera-bg-layer {
+      background-image: var(--xatosfera-mobile-dark-bg);
+    }
+
+    
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    color: hsl(var(--primary-foreground));
+  }
+
+  a {
+    @apply no-underline;
+  }
+
+  a:hover {
+    @apply no-underline;
+  }
+
+  button,
+  [role='button'] {
+    font-family: var(--font-display);
+  }
+
+  .section-graphite-cool {
+    position: relative;
+    background: linear-gradient(
+      155deg,
+      hsla(0, 0%, 3%, 0.45) 0%,
+      hsla(0, 0%, 6%, 0.45) 30%,
+      hsla(182, 2%, 0%, 0.65) 50%,
+      hsla(0, 0%, 6%, 0.45) 70%,
+      hsla(0, 0%, 2%, 0.45) 100%
+    );
+    background-size: 100% 100%;
+  }
+
+  .section-graphite-heavy {
+    position: relative;
+    background: linear-gradient(
+      155deg,
+      hsla(0, 0%, 1%, 0.9) 0%,
+      hsla(0, 0%, 3%, 0.9) 30%,
+      hsla(253, 15%, 7%, 1) 50%,
+      hsla(0, 0%, 3%, 0.9) 70%,
+      hsla(0, 0%, 1%, 0.9) 100%
+    );
+    background-size: 100% 100%;
+  }
+
+  .section-graphite-warm {
+    position: relative;
+    background: linear-gradient(
+      155deg,
+      hsla(0, 0%, 2%, 0.59) 0%,
+      hsla(0, 0%, 3%, 0.59) 30%,
+      hsla(0, 0%, 2%, 0.59) 50%,
+      hsla(182, 0%, 0%, 0.7) 70%,
+      hsla(0, 0%, 0%, 0.59) 100%
+    );
+    background-size: 100% 100%;
+  }
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  /* ─── iOS 26 Inputs — glassmorphism, blue glow on focus ─── */
+  .app-content input:not([type='checkbox']):not([type='radio']):not(.field-input),
+  .app-content textarea,
+  .app-content select {
+    background: hsl(var(--surface-1) / 0.78);
+    border: 1px solid hsl(var(--glass-border));
+    color: hsl(var(--foreground));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-radius: calc(var(--radius) - 2px);
+  }
+
+  .app-content input:not([type='checkbox']):not([type='radio']):not(.field-input):hover,
+  .app-content textarea:hover,
+  .app-content select:hover {
+    background: hsl(var(--surface-1) / 0.9);
+    border-color: var(--glass-border-hover);
+  }
+
+  .app-content input:not([type='checkbox']):not([type='radio']):not(.field-input):focus,
+  .app-content textarea:focus,
+  .app-content select:focus {
+    background: hsl(var(--surface-1) / 0.95);
+    border-color: hsl(var(--gold-ring));
+    outline: 1px solid hsl(var(--gold-ring));
+    outline-offset: 0;
+  }
+
+  .app-content input:not(.field-input)::placeholder,
+  .app-content textarea::placeholder {
+    color: hsl(var(--muted-foreground));
+    opacity: 0.6;
+  }
+
+  /* iOS-style Select triggers */
+  [data-radix-select-trigger],
+  [role='combobox'] {
+    background: hsl(var(--surface-1) / 0.84);
+    border: 1px solid hsl(var(--glass-border));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  [data-radix-select-trigger]:hover,
+  [role='combobox']:hover {
+    background: hsl(var(--surface-1) / 0.94);
+    border-color: var(--glass-border-hover);
   }
 }
 
-/* Custom utility classes if needed */
+@layer components {
+  .app-fixed-bg {
+    background-image:
+      linear-gradient(180deg, hsla(0, 0%, 100%, 0.12), hsla(190, 45%, 92%, 0.36)),
+      url('../приклад/bg-lt.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  html:not([data-theme='light']) .app-fixed-bg {
+    background-image:
+      linear-gradient(180deg, hsla(213, 58%, 4%, 0.18), hsla(213, 58%, 4%, 0.5)),
+      url('../src/assets/141.webp');
+  }
+
+  @media (max-width: 767px) {
+    .app-fixed-bg {
+      background-image:
+        linear-gradient(180deg, hsla(0, 0%, 100%, 0.1), hsla(190, 45%, 92%, 0.3)),
+        url('../приклад/bg-mb-lt.png');
+    }
+
+    html:not([data-theme='light']) .app-fixed-bg {
+      background-image:
+        linear-gradient(180deg, hsla(213, 58%, 4%, 0.16), hsla(213, 58%, 4%, 0.46)),
+        url('../приклад/bg-mb.png');
+    }
+  }
+
+  .asset-sidebar {
+    --sidebar-blur: 6px;
+
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    contain: layout paint style;
+
+    border-radius: 1.5rem;
+    background-color: rgba(10, 10, 14, 0.34);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.11);
+    border-right: 1px solid rgba(255, 255, 255, 0.045);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .asset-sidebar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-color: rgba(10, 10, 14, 0.24);
+    -webkit-backdrop-filter: blur(var(--sidebar-blur)) saturate(1.22) contrast(1.035);
+    backdrop-filter: blur(var(--sidebar-blur)) saturate(1.22) contrast(1.035);
+  }
+
+  
+
+  .asset-mobar {
+    --sidebar-blur: 6px;
+
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    contain: layout paint style;
+
+    border-radius: 1.5rem;
+    background-color: rgba(10, 10, 14, 0.34);
+
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    border-left: 1px solid rgba(255, 255, 255, 0.11);
+    border-right: 1px solid rgba(255, 255, 255, 0.045);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.035);
+
+    box-shadow:
+      0 8px 16px rgba(0, 0, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .asset-mobar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+
+    background-color: rgba(10, 10, 14, 0.24);
+    -webkit-backdrop-filter: blur(var(--sidebar-blur)) saturate(1.22) contrast(1.035);
+    backdrop-filter: blur(var(--sidebar-blur)) saturate(1.22) contrast(1.035);
+  }
+
+  
+
+  
+}
 @layer utilities {
+  /* Touch manipulation for mobile - prevents double-tap zoom delays */
+  .touch-manipulation {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .badge-neutral {
+    background-color: hsl(var(--badge-neutral-bg));
+    border-color: hsl(var(--badge-neutral-border));
+    color: hsl(var(--badge-neutral-text));
+  }
+
+  .badge-info {
+    background-color: hsl(var(--badge-info-bg));
+    border-color: hsl(var(--badge-info-border));
+    color: hsl(var(--badge-info-text));
+  }
+
+  .badge-warning {
+    background-color: hsl(var(--badge-warning-bg));
+    border-color: hsl(var(--badge-warning-border));
+    color: hsl(var(--badge-warning-text));
+  }
+
+  .badge-success {
+    background-color: hsl(var(--badge-success-bg));
+    border-color: hsl(var(--badge-success-border));
+    color: hsl(var(--badge-success-text));
+  }
+
+  .badge-danger {
+    background-color: hsl(var(--badge-danger-bg));
+    border-color: hsl(var(--badge-danger-border));
+    color: hsl(var(--badge-danger-text));
+  }
+
+  .badge-outline {
+    background-color: transparent;
+    border-color: hsl(var(--badge-neutral-border));
+    color: hsl(var(--foreground));
+  }
+
+  .contact-action,
+  .contact-popover-action,
+  .contact-icon-button {
+    border: 1px solid transparent;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease,
+      transform 180ms ease;
+  }
+
+  .contact-action:hover,
+  .contact-popover-action:hover,
+  .contact-icon-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .contact-action:disabled {
+    opacity: 0.48;
+  }
+
+  .contact-popover-action {
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+
+  .contact-icon-button {
+    display: inline-flex;
+    height: 2.25rem;
+    width: 2.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+  }
+
+  .contact-action-phone {
+    background-color: hsl(var(--contact-phone-bg));
+    border-color: hsl(var(--contact-phone-border));
+    color: hsl(var(--contact-phone-text));
+  }
+
+  .contact-action-email {
+    background-color: hsl(var(--contact-email-bg));
+    border-color: hsl(var(--contact-email-border));
+    color: hsl(var(--contact-email-text));
+  }
+
+  .contact-action-whatsapp {
+    background-color: hsl(var(--contact-whatsapp-bg));
+    border-color: hsl(var(--contact-whatsapp-border));
+    color: hsl(var(--contact-whatsapp-text));
+  }
+
+  .contact-action-telegram {
+    background-color: hsl(var(--contact-telegram-bg));
+    border-color: hsl(var(--contact-telegram-border));
+    color: hsl(var(--contact-telegram-text));
+  }
+
+  .contact-action-viber {
+    background-color: hsl(var(--contact-viber-bg));
+    border-color: hsl(var(--contact-viber-border));
+    color: hsl(var(--contact-viber-text));
+  }
+
+  @keyframes dialog-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes dialog-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
+  }
+
+  .dialog-fade[data-state='open'] {
+    animation: dialog-fade-in 150ms ease-out;
+  }
+
+  .dialog-fade[data-state='closed'] {
+    animation: dialog-fade-out 150ms ease-out;
+  }
+
+  /* ─── iOS 26 Glassmorphism ─── */
   .glass {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    @apply relative rounded-2xl overflow-hidden border;
+    background: hsl(var(--surface-1) / 0.84);
+    border-color: hsl(var(--glass-border));
+  }
+
+  .glass::before {
+    content: none;
+  }
+
+  /* iOS-style inner glow */
+  .glass::after {
+    content: none;
+  }
+
+  /* iOS Card glass — плавні переходи */
+  .glass-card {
+    @apply glass p-4 sm:p-5;
+  }
+
+  .glass-card:hover {
+    background: hsl(var(--surface-1) / 0.92);
+    border-color: hsl(var(--glass-border-hover));
+  }
+
+  .glass-card:hover::before {
+    opacity: 0;
+  }
+
+  .glass-card:hover::after {
+    opacity: 0;
+  }
+
+  @media (hover: none) {
+    .glass-card:hover {
+      background: hsl(var(--surface-1) / 0.84);
+      border-color: hsl(var(--glass-border));
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .glass-card:hover::after {
+      opacity: 0;
+    }
+
+    .glass-card:active {
+      transform: none;
+    }
   }
 }
+
+@media (max-width: 639px) {
+  #main-scroll.app-content {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    flex-basis: 100vw !important;
+  }
+
+  #main-scroll > .app-page-shell {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  #main-scroll > .app-page-shell > .app-page {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
+}
+
+/* iOS System Status indicators */
+.status-active,
+.status-sold,
+.status-rented,
+.status-available {
+  @apply border rounded-full px-3 py-1;
+}
+
+.status-active {
+  background: hsl(var(--badge-success-bg));
+  color: hsl(var(--badge-success-text));
+  border-color: hsl(var(--badge-success-border));
+}
+
+.status-sold {
+  background: hsl(var(--badge-danger-bg));
+  color: hsl(var(--badge-danger-text));
+  border-color: hsl(var(--badge-danger-border));
+}
+
+.status-rented {
+  background: hsl(var(--badge-warning-bg));
+  color: hsl(var(--badge-warning-text));
+  border-color: hsl(var(--badge-warning-border));
+}
+
+.status-available {
+  background: hsl(var(--badge-success-bg));
+  color: hsl(var(--badge-success-text));
+  border-color: hsl(var(--badge-success-border));
+}
+
+/* ─── iOS 26 Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+
+
+
+
+/* ─── iOS Focus States ─── */
+*:focus-visible {
+  outline: 2px solid hsl(var(--gold-ring));
+  outline-offset: 2px;
+}
+
+/* ─── iOS Radix dropdowns — blur вимкнено ─── */
+html:not([data-theme='light']) [data-radix-popper-content-wrapper] > *,
+html:not([data-theme='light']) [role='listbox'],
+html:not([data-theme='light']) [data-radix-select-content] {
+  background: linear-gradient(
+    135deg,
+    rgba(42, 42, 42, 0.98) 0%,
+    rgba(41, 41, 41, 0.95) 100%
+  ) !important;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   GLOBAL BLUR DISABLE - Вимкнення всіх blur ефектів
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Override для всіх Tailwind backdrop-blur класів */
+[class*='backdrop-blur'] {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* Override для будь-яких елементів з inline backdrop-filter */
+[style*='backdrop-filter'],
+[style*='backdrop-filter: blur'],
+[style*='-webkit-backdrop-filter'] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Override для всіх backdrop-blur з arbitary values */
+[class*='backdrop-blur-['] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Override для filter: blur */
+[class*='blur-'],
+[style*='filter: blur'],
+[style*='filter:blur'] {
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Селектори для всіх елементів що можуть мати blur */
+* {
+  --glass-blur: none;
+  --glass-blur-heavy: none;
+  --glass-blur-subtle: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MONOLITH LIGHT CRM — final overrides
+   Працює тільки для 
+
+/* Вимкнення важких ефектів тільки в light */
+
+
+
+
+/* Загальний текст */
+
+
+
+
+
+
+/* Головний контент — як великий світлий glass shell */
+
+
+
+
+@media (max-width: 1023px) {
+  html .app-page-shell::before {
+    inset: 10px;
+    border-radius: 1.5rem;
+    background: rgba(10, 10, 14, 0.5);
+  }
+
+  
+}
+
+@media (min-width: 1024px) and (max-width: 1512px) {
+  html .app-page-shell::before,
+  
+}
+
+html .app-page-shell.public-property-content-shell::before {
+  inset: 0 0.5rem 0 0.5rem;
+  border: 0;
+}
+
+
+
+@media (min-width: 640px) {
+  html .app-page-shell.public-property-content-shell::before,
+  
+}
+
+@media (min-width: 1024px) {
+  html .app-page-shell.public-property-content-shell::before,
+  
+}
+
+.angels-migration-page {
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.78)),
+    url('/pubprop/public-property-dark.png') center / cover no-repeat fixed;
+}
+
+.angels-migration-page-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 18px;
+}
+
+html .app-page-shell.angels-migration-page-shell::before,
+
+
+.angels-migration-page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .angels-migration-page {
+    background-attachment: scroll;
+  }
+
+  .angels-migration-page-shell {
+    border-radius: 14px;
+  }
+}
+
+/* Sidebar світлий 1:1 напрям зі скріну */
+
+
+/* Cards / pages */
+
+
+
+
+
+
+.app-card.dashboard-database-status-card--success {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--badge-success-text) / 0.14),
+    hsl(var(--card) / 0.86)
+  ) !important;
+}
+
+.app-card.dashboard-database-status-card--warning {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--badge-warning-text) / 0.16),
+    hsl(var(--card) / 0.86)
+  ) !important;
+}
+
+.app-card.dashboard-database-status-card--danger {
+  background: linear-gradient(
+    135deg,
+    hsl(var(--badge-danger-text) / 0.16),
+    hsl(var(--card) / 0.86)
+  ) !important;
+}
+
+/* Типографіка всередині світлих поверхонь */
+
+
+
+
+/* Таблиці, рядки, внутрішні блоки */
+
+
+/* Inputs / selects */
+
+
+
+
+/* Buttons */
+
+
+/* Статуси під Monolith palette */
+
+
+
+
+
+
+/* Scrollbar у світлій темі */
+
+
+
+
+:root { 
+  --shadow-button: var(--shadow-button-dark);
+  --shadow-muted: var(--shadow-muted-dark);
+  --shadow-card: var(--shadow-card-dark);
+ }
+
+
+@layer utilities {
+  .glass-panel {
+    background-color: color-mix(in srgb, var(--color-surface) var(--glass-opacity), transparent);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+}
+

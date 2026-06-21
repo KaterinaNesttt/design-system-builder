@@ -25,6 +25,8 @@ export type Borders = {
 export type Effects = {
   shadowOpacity: number;
   shadowSize: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'none';
+  glassOpacity: number;
+  glassBlur: number;
 };
 
 export type DesignState = {
@@ -32,39 +34,44 @@ export type DesignState = {
   typography: Typography;
   borders: Borders;
   effects: Effects;
+  backgroundImage: string | null;
 };
 
 export type DesignStore = DesignState & {
   updateColor: (key: keyof Colors, value: string) => void;
-  updateTypography: (key: keyof Typography, value: any) => void;
+  updateTypography: <K extends keyof Typography>(key: K, value: Typography[K]) => void;
   updateBorder: (key: keyof Borders, value: number) => void;
-  updateEffect: (key: keyof Effects, value: any) => void;
+  updateEffect: <K extends keyof Effects>(key: K, value: Effects[K]) => void;
+  updateBackgroundImage: (url: string | null) => void;
   reset: () => void;
 };
 
 const defaultState: DesignState = {
   colors: {
-    primary: '#3b82f6', // blue-500
-    secondary: '#10b981', // emerald-500
-    accent: '#8b5cf6', // violet-500
-    background: '#f8fafc', // slate-50
-    surface: '#ffffff', // white
-    text: '#0f172a', // slate-900
-    textMuted: '#64748b', // slate-500
-    border: '#e2e8f0', // slate-200
+    primary: '#469da0', // iOS 26 Primary
+    secondary: '#162128', // iOS 26 Secondary
+    accent: '#275859', // iOS 26 Accent
+    background: '#02050d', // iOS 26 Background
+    surface: '#121c21', // iOS 26 Card
+    text: '#e3ded2', // iOS 26 Foreground
+    textMuted: '#a8a59e', // iOS 26 Muted Foreground
+    border: '#3d3d3d', // iOS 26 Border
   },
   typography: {
-    fontFamily: '"Inter", sans-serif',
+    fontFamily: '-apple-system, "SF Pro Text", "TT Norms Pro", system-ui, sans-serif',
     baseSize: 16,
   },
   borders: {
-    radius: 0.5, // rem
+    radius: 1.125, // rem
     width: 1, // px
   },
   effects: {
     shadowOpacity: 10,
     shadowSize: 'md',
+    glassOpacity: 80,
+    glassBlur: 12,
   },
+  backgroundImage: null,
 };
 
 export const useDesignStore = create<DesignStore>()(
@@ -79,10 +86,12 @@ export const useDesignStore = create<DesignStore>()(
         set((state) => ({ borders: { ...state.borders, [key]: value } })),
       updateEffect: (key, value) =>
         set((state) => ({ effects: { ...state.effects, [key]: value } })),
+      updateBackgroundImage: (value) =>
+        set(() => ({ backgroundImage: value })),
       reset: () => set(defaultState),
     }),
     {
-      name: 'design-system-storage',
+      name: 'design-system-storage-v2',
     }
   )
 );
